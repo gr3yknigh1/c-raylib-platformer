@@ -14,9 +14,9 @@ char* GetAssetFullPath(char* assetFullPath, const char* assetPath) {
 }
 
 
-Texture2D LoadTextureAsset(char* assetPath) {
+const Texture2D LoadTextureAsset(char* assetPath) {
   char textureFullPath[FILENAME_MAX];
-  Texture2D texture = LoadTexture(
+  const Texture2D texture = LoadTexture(
     GetAssetFullPath(textureFullPath, assetPath)
     );
   return texture;

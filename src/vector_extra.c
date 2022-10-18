@@ -2,31 +2,33 @@
 
 
 Vector2 SubtractVector2(Vector2 vector1, Vector2 vector2) {
-  Vector2 newVector = {
+  return (Vector2) {
     .x = vector1.x - vector2.x,
-    .y = vector1.y - vector2.y
+    .y = vector1.y - vector2.y,
   };
-  return newVector;
 }
 
 
 const Vector2 Vector2Half(Vector2 vector) {
-  const Vector2 vectorHalf = { vector.x / 2, vector.y / 2 };
-  return vectorHalf;
+  return (Vector2){
+    .x = vector.x / 2,
+    .y = vector.y / 2,
+  };
 }
 
 
 const Vector2 Texture2DSize(Texture2D texture) {
-  const Vector2 size = { texture.width, texture.height };
-  return size;
+  return (Vector2) {
+    .x = texture.width,
+    .y = texture.height,
+  };
 }
 
 
 Vector2 CenterTexture2D(Vector2 windowSize, Texture2D texture) {
-  Vector2 centered = SubtractVector2(
+  return SubtractVector2(
     Vector2Half(windowSize),
     Vector2Half(Texture2DSize(texture))
   );
-  return centered;
 }
 

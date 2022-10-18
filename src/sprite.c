@@ -4,38 +4,39 @@
 
 
 const SpritePool InitSpritePool(int capacity) {
-  const SpritePool spritePool = {
+  return (SpritePool) {
     .sprites  = MemAlloc(capacity * sizeof(Sprite)),
     .count    = 0,
     .capacity = capacity,
   };
-  return spritePool;
 }
 
 
 const Sprite CreateSprite(Vector2 position, char* textureAssetPath, int layerId) {
+  const Texture2D texture = LoadTextureAsset(textureAssetPath);
   return CreateSpriteT(
     position,
-    LoadTextureAsset(textureAssetPath),
+    &texture,
     layerId
     );
 }
 
 
-const Sprite CreateSpriteT(Vector2 position, Texture texture, int layerId) {
-  const Sprite sprite = {
+const Sprite CreateSpriteT(Vector2 position, const Texture* texture, int layerId) {
+  return (Sprite) {
     .position = {
       .x = position.x,
       .y = position.y,
     },
     .texture = texture,
-  };
-  return sprite;
+  };;
 }
 
 
 const int AddSprite2Pool(SpritePool* spritePool, Sprite sprite) {
   if (spritePool->count >= spritePool->capacity) {
+    TraceLog(LOG_ERROR, "SpritePool overflowed. Skipping sprite adding");
+    TraceLog(LOG_TRACE, "SpritePool capacity: %d", spritePool->capacity);
     return -1;
   }
   spritePool->sprites[spritePool->count] = sprite;
@@ -44,7 +45,7 @@ const int AddSprite2Pool(SpritePool* spritePool, Sprite sprite) {
 }
 
 
-const int AddSprite2PoolC(SpritePool* spritePool, Vector2 position, Texture2D texture, int layerId) {
+const int AddSprite2PoolC(SpritePool* spritePool, Vector2 position, const Texture2D* texture, int layerId) {
   return AddSprite2Pool(
     spritePool,
     CreateSpriteT(position, texture, layerId)
@@ -66,7 +67,7 @@ const Sprite GetSpriteFromPool(SpritePool* spritePool, int index) {
 
 
 void DrawSprite(Sprite sprite) {
-  DrawTextureV(sprite.texture, sprite.position, WHITE);
+  DrawTextureV(*sprite.texture, sprite.position, WHITE);
 }
 
 
