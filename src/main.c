@@ -35,17 +35,12 @@ int main() {
 
   SpritePool spritePool = InitSpritePool(2);
 
-  {
-    const Texture2D texture = LoadTextureAsset("test.png");
-    const Vector2 position = CenterTexture2D(windowSize, texture);
-    AddSprite2PoolC(&spritePool, position, &texture, 0);
-    AddSprite2PoolC(
-      &spritePool,
-      SubtractVector2(position, (Vector2){ 10, 10 }),
-      &texture,
-      0
-      );
-  }
+  const Texture2D sdudeTexture = LoadTextureAsset("sprites/sdude.png");
+  const Sprite sdudeSprite = CreateSpriteT(windowCenter, &sdudeTexture, 0);
+  AddSprite2Pool(
+    &spritePool,
+    sdudeSprite
+    );
 
   while (!WindowShouldClose()) {
     BeginDrawing();
