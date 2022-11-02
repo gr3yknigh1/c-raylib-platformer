@@ -17,18 +17,10 @@ const Vector2 Vector2Half(Vector2 vector) {
 }
 
 
-const Vector2 Texture2DSize(Texture2D texture) {
-  return (Vector2) {
-    .x = texture.width,
-    .y = texture.height,
-  };
-}
-
-
 Vector2 CenterTexture2D(Vector2 windowSize, Texture2D texture) {
   return SubtractVector2(
     Vector2Half(windowSize),
-    Vector2Half(Texture2DSize(texture))
+    Vector2Half((Vector2){ texture.width, texture.height })
   );
 }
 
