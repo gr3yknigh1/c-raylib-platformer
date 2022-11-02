@@ -1,2 +1,3 @@
-# Simple raylib test project
+# C Raylib Platformer
 
+Simple raylib platformer in C
