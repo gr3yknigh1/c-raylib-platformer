@@ -13,6 +13,7 @@
 
 int main() {
 
+  // @NOTE(gr3yknigh1): Project initialization
   const ProjectConfiguration config = {
     .windowTitle = "C Raylib Platformer",
     .windowSize  = {
@@ -32,9 +33,11 @@ int main() {
     config.windowTitle
     );
   SetTargetFPS(config.targetFPS);
+  TraceLog(LOG_INFO, "Project initialized successfully");
 
+
+  // @NOTE(gr3yknigh1): Scene initialization
   SpritePool spritePool = InitSpritePool(2);
-
   const Texture2D sdudeTexture = LoadTextureAsset("sprites/sdude.png");
   const Sprite sdudeSprite = CreateSpriteT(windowCenter, &sdudeTexture, 0);
   AddSprite2Pool(
@@ -42,13 +45,14 @@ int main() {
     sdudeSprite
     );
 
+
+  // @NOTE(gr3yknigh1): Gameloop
   while (!WindowShouldClose()) {
     BeginDrawing();
       ClearBackground(config.clearColor);
       DrawSpritePool(&spritePool);
     EndDrawing();
   }
-
   CloseWindow();
 
   return OK;
