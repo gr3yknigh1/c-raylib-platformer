@@ -6,6 +6,11 @@
 char* GetAssetDirPath();
 char* GetAssetFullPath(char* assetFullPath, const char* assetPath);
 
-const Texture2D LoadTextureAsset(char* assetPath);
+Texture2D LoadTextureAsset(char* assetPath);
+Image     LoadImageAsset  (char* assetPath);
+
+void UnloadTextureAssets();
+
+void UnloadAssets();
 
 #endif

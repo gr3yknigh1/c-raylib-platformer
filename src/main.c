@@ -1,4 +1,5 @@
-#include "stdio.h"
+#include <stdio.h>
+#include <stdbool.h>
 
 #include "raylib.h"
 
@@ -15,44 +16,80 @@ int main() {
 
   // @NOTE(gr3yknigh1): Project initialization
   const ProjectConfiguration config = {
-    .windowTitle = "C Raylib Platformer",
-    .windowSize  = {
+    .windowTitle  = "C Raylib Platformer",
+    .windowSize   = {
       .x = 800,
       .y = 600,
     },
-    .targetFPS   = 60,
-    .clearColor  = WHITE,
+    .targetFPS    = 60,
+    .clearColor   = WHITE,
+    .isFullscreen = true,
+
+    .physics = {
+      .gravityForce     = 500,
+      .gravityDirection = { 0, 1 }
+    },
   };
 
-  const Vector2 windowSize   = config.windowSize;
-  const Vector2 windowCenter = GetWindowCenter(config);
-
   InitWindow(
-    windowSize.x,
-    windowSize.y,
+    config.windowSize.x,
+    config.windowSize.y,
     config.windowTitle
     );
   SetTargetFPS(config.targetFPS);
+  SetWindowState(FLAG_WINDOW_MAXIMIZED);
+
+  if (config.isFullscreen) {
+    ToggleFullscreenC(config);
+  }
+
   TraceLog(LOG_INFO, "Project initialized successfully");
+
+  const Vector2 windowCenter = GetWindowCenter(config);
 
 
   // @NOTE(gr3yknigh1): Scene initialization
   SpritePool spritePool = InitSpritePool(2);
-  const Texture2D sdudeTexture = LoadTextureAsset("sprites/sdude.png");
-  const Sprite sdudeSprite = CreateSpriteT(windowCenter, &sdudeTexture, 0);
+  Texture sdudeTexture = LoadTextureAsset("sprites/sdude.png");
+  int sdudeSpeed = 800;
+  Sprite sdudeSprite = CreateSpriteT(windowCenter, &sdudeTexture, 0);
   AddSprite2Pool(
     &spritePool,
     sdudeSprite
     );
 
 
-  // @NOTE(gr3yknigh1): Gameloop
+  // @NOTE(gr3yknigh1): Game loop
   while (!WindowShouldClose()) {
+    float ft = GetFrameTime();
+
+    // @NOTE(gr3yknigh1) Input Handling
+    if (IsKeyDown(KEY_RIGHT)) {
+      sdudeSprite.position.x += sdudeSpeed * ft;
+    } else if (IsKeyDown(KEY_LEFT)) {
+      sdudeSprite.position.x -= sdudeSpeed * ft;
+    }
+
+
+    // @NOTE(gr3yknigh1): Apply physics
+    sdudeSprite.position = AddVector2(
+      sdudeSprite.position,
+      ScaleVector2(
+        config.physics.gravityDirection,
+        config.physics.gravityForce * ft
+        )
+      );
+
+
+    // @NOTE(gr3yknigh1): Rendering
     BeginDrawing();
       ClearBackground(config.clearColor);
-      DrawSpritePool(&spritePool);
+      DrawSprite(sdudeSprite);
+      // DrawTexture(*sdudeSprite.texture, sdudeSprite.position.x, sdudeSprite.position.y, WHITE);
+      // DrawSpritePool(&spritePool);
     EndDrawing();
   }
+
   CloseWindow();
 
   return OK;

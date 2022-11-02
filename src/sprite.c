@@ -13,7 +13,7 @@ const SpritePool InitSpritePool(int capacity) {
 
 
 const Sprite CreateSprite(Vector2 position, char* textureAssetPath, int layerId) {
-  const Texture2D texture = LoadTextureAsset(textureAssetPath);
+  Texture2D texture = LoadTextureAsset(textureAssetPath);
   return CreateSpriteT(
     position,
     &texture,
@@ -22,14 +22,14 @@ const Sprite CreateSprite(Vector2 position, char* textureAssetPath, int layerId)
 }
 
 
-const Sprite CreateSpriteT(Vector2 position, const Texture* texture, int layerId) {
+const Sprite CreateSpriteT(Vector2 position, Texture* texture, int layerId) {
   return (Sprite) {
     .position = {
       .x = position.x,
       .y = position.y,
     },
     .texture = texture,
-  };;
+  };
 }
 
 
@@ -45,7 +45,7 @@ const int AddSprite2Pool(SpritePool* spritePool, Sprite sprite) {
 }
 
 
-const int AddSprite2PoolC(SpritePool* spritePool, Vector2 position, const Texture2D* texture, int layerId) {
+const int AddSprite2PoolC(SpritePool* spritePool, Vector2 position, Texture2D* texture, int layerId) {
   return AddSprite2Pool(
     spritePool,
     CreateSpriteT(position, texture, layerId)
@@ -76,4 +76,5 @@ void DrawSpritePool(SpritePool* spritePool) {
     DrawSprite(spritePool->sprites[i]);
   }
 }
+
 

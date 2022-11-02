@@ -1,18 +1,39 @@
 #include "raylib.h"
 
 
-Vector2 SubtractVector2(Vector2 vector1, Vector2 vector2) {
+Vector2 OppositeVector2(Vector2 v) {
   return (Vector2) {
-    .x = vector1.x - vector2.x,
-    .y = vector1.y - vector2.y,
+    .x = -1 * v.x,
+    .y = -1 * v.y,
   };
 }
 
 
-const Vector2 Vector2Half(Vector2 vector) {
+Vector2 AddVector2(Vector2 v1, Vector2 v2) {
   return (Vector2){
-    .x = vector.x / 2,
-    .y = vector.y / 2,
+    .x = v1.x + v2.x,
+    .y = v1.y + v2.y,
+  };
+}
+
+
+Vector2 SubtractVector2(Vector2 v1, Vector2 v2) {
+  return AddVector2(v1, OppositeVector2(v2));
+}
+
+
+Vector2 ScaleVector2(Vector2 v, float scalar) {
+  return (Vector2){
+    .x = v.x * scalar,
+    .y = v.y * scalar,
+  };
+}
+
+
+const Vector2 Vector2Half(Vector2 v) {
+  return (Vector2){
+    .x = v.x / 2,
+    .y = v.y / 2,
   };
 }
 

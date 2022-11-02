@@ -6,7 +6,7 @@
 
 typedef struct Sprite {
   Vector2   position;
-  const Texture2D* texture;
+  Texture2D* texture;
   int layerId;
 } Sprite;
 
@@ -21,12 +21,12 @@ typedef struct SpritePool {
 const SpritePool InitSpritePool(int capacity);
 
 const Sprite CreateSprite(Vector2 position, char* textureAssetPath, int layerId);
-const Sprite CreateSpriteT(Vector2 position, const Texture2D* texture, int layerId);
+const Sprite CreateSpriteT(Vector2 position, Texture2D* texture, int layerId);
 
 
 const int AddSprite2Pool(SpritePool* spritePool, Sprite sprite);
 const int AddSprite2PoolC(
-  SpritePool* spritePool, Vector2 position, const Texture2D* texture, int layerId);
+  SpritePool* spritePool, Vector2 position, Texture2D* texture, int layerId);
 const int AddSprite2PoolCA(
   SpritePool* spritePool, Vector2 position, char* textureAssetPath, int layerId);
 
