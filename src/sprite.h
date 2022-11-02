@@ -25,8 +25,10 @@ const Sprite CreateSpriteT(Vector2 position, const Texture2D* texture, int layer
 
 
 const int AddSprite2Pool(SpritePool* spritePool, Sprite sprite);
-const int AddSprite2PoolC(SpritePool* spritePool, Vector2 position, const Texture2D* texture, int layerId);
-const int AddSprite2PoolCA(SpritePool* spritePool, Vector2 position, char* textureAssetPath, int layerId);
+const int AddSprite2PoolC(
+  SpritePool* spritePool, Vector2 position, const Texture2D* texture, int layerId);
+const int AddSprite2PoolCA(
+  SpritePool* spritePool, Vector2 position, char* textureAssetPath, int layerId);
 
 
 const Sprite GetSpriteFromPool(SpritePool* spritePool, int index);
