@@ -21,7 +21,6 @@ void ToggleFullscreenC(ProjectConfiguration config) {
       GetMonitorWidth(monitor),
       GetMonitorHeight(monitor)
       );
-
     ToggleFullscreen();
   }
 }

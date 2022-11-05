@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#include "raylib.h"
+#include <raylib.h>
 
 #include "project.h"
 #include "sprite.h"
@@ -17,17 +17,22 @@ int main() {
   // @NOTE(gr3yknigh1): Project initialization
   const ProjectConfiguration config = {
     .windowTitle  = "C Raylib Platformer",
+
     .windowSize   = {
       .x = 800,
       .y = 600,
     },
+
     .targetFPS    = 60,
-    .clearColor   = WHITE,
+    .clearColor   = ColorFromHSV(289, 99, 97),
     .isFullscreen = true,
 
     .physics = {
       .gravityForce     = 500,
-      .gravityDirection = { 0, 1 }
+      .gravityDirection = {
+        .x = 0,
+        .y = 1
+      }
     },
   };
 
@@ -46,7 +51,6 @@ int main() {
   TraceLog(LOG_INFO, "Project initialized successfully");
 
   const Vector2 windowCenter = GetWindowCenter(config);
-
 
   // @NOTE(gr3yknigh1): Scene initialization
   SpritePool spritePool = InitSpritePool(2);
@@ -70,16 +74,20 @@ int main() {
       sdudeSprite.position.x -= sdudeSpeed * ft;
     }
 
+    if (IsKeyDown(KEY_UP)) {
+      sdudeSprite.position.y -= sdudeSpeed * ft;
+    } else if (IsKeyDown(KEY_DOWN)) {
+      sdudeSprite.position.y += sdudeSpeed * ft;
+    }
 
     // @NOTE(gr3yknigh1): Apply physics
-    sdudeSprite.position = AddVector2(
-      sdudeSprite.position,
-      ScaleVector2(
-        config.physics.gravityDirection,
-        config.physics.gravityForce * ft
-        )
-      );
-
+    // sdudeSprite.position = AddVector2(
+    //   sdudeSprite.position,
+    //   ScaleVector2(
+    //     config.physics.gravityDirection,
+    //     config.physics.gravityForce * ft
+    //     )
+    //   );
 
     // @NOTE(gr3yknigh1): Rendering
     BeginDrawing();
